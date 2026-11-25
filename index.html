@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="calculator" aria-label="Калькулятор">
+    <div class="display">
+      <div class="history" id="history"></div>
+      <div class="current" id="current" aria-live="polite">0</div>
+    </div>
+
+    <div class="keys" id="keys">
+      <button class="key func" data-action="clear">C</button>
+      <button class="key func" data-action="backspace">⌫</button>
+      <button class="key func" data-value="(">(</button>
+      <button class="key func" data-value=")">)</button>
+
+      <button class="key" data-value="7">7</button>
+      <button class="key" data-value="8">8</button>
+      <button class="key" data-value="9">9</button>
+      <button class="key op" data-value="/">÷</button>
+
+      <button class="key" data-value="4">4</button>
+      <button class="key" data-value="5">5</button>
+      <button class="key" data-value="6">6</button>
+      <button class="key op" data-value="*">×</button>
+
+      <button class="key" data-value="1">1</button>
+      <button class="key" data-value="2">2</button>
+      <button class="key" data-value="3">3</button>
+      <button class="key op" data-value="-">−</button>
+
+      <button class="key func" data-action="percent">%</button>
+      <button class="key" data-value="0">0</button>
+      <button class="key" data-value=".">.</button>
+      <button class="key op" data-value="+">+</button>
+
+      <button class="key equals" data-action="equals">=</button>
+    </div>
+
+    <p class="hint">Enter — посчитать, Esc — очистить</p>
+  </main>
+
+  <div class="meme-overlay" id="meme" aria-hidden="true" role="dialog" aria-label="Деление на ноль">
+    <div class="meme-card">
+      <img src="images/sweet-fox.jpg" alt="Свити Фокс">
+      <p class="meme-caption">ААА СВИТИ ФОКС</p>
+      <p class="meme-sub">на ноль делить нельзя!</p>
+      <button class="meme-btn" id="memeClose">ладно, больше не буду</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

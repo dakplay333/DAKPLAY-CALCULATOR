@@ -1,0 +1,307 @@
+:root {
+  --bg: #0b0d17;
+  --text: #f2f4ff;
+  --muted: #8b90ad;
+  --key: rgba(255, 255, 255, 0.07);
+  --key-hover: rgba(255, 255, 255, 0.14);
+  --accent: #7c5cff;
+  --accent-2: #00d4ff;
+  --danger: #ff4d6d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(900px 600px at 15% 10%, rgba(124, 92, 255, 0.28), transparent 60%),
+    radial-gradient(800px 600px at 85% 90%, rgba(0, 212, 255, 0.18), transparent 60%),
+    var(--bg);
+}
+
+/* ---------- Калькулятор ---------- */
+
+.calculator {
+  width: min(380px, 100%);
+  padding: 22px;
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+.display {
+  min-height: 132px;
+  padding: 18px 16px 14px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.history {
+  color: var(--muted);
+  font-size: 15px;
+  min-height: 20px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current {
+  width: 100%;
+  text-align: right;
+  font-size: clamp(28px, 9vw, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.current::-webkit-scrollbar {
+  display: none;
+}
+
+.current.error {
+  color: var(--danger);
+}
+
+/* ---------- Клавиши ---------- */
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.key {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 18px;
+  background: var(--key);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, transform 0.08s, box-shadow 0.15s;
+}
+
+.key:hover {
+  background: var(--key-hover);
+}
+
+.key:active {
+  transform: scale(0.94);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+.key.func {
+  background: rgba(255, 255, 255, 0.045);
+  color: #b9c0e0;
+  font-size: 20px;
+}
+
+.key.func:hover {
+  background: var(--key-hover);
+}
+
+.key.op {
+  background: rgba(124, 92, 255, 0.22);
+  color: #cfc4ff;
+}
+
+.key.op:hover {
+  background: rgba(124, 92, 255, 0.34);
+}
+
+.key.equals {
+  grid-column: span 4;
+  aspect-ratio: auto;
+  padding: 16px;
+  font-size: 26px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), #4b8bff 60%, var(--accent-2));
+  box-shadow: 0 10px 26px rgba(90, 110, 255, 0.35);
+}
+
+.key.equals:hover {
+  filter: brightness(1.08);
+}
+
+.hint {
+  margin: 14px 2px 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+/* ---------- Пасхалка ---------- */
+
+.meme-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4, 5, 12, 0.82);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.meme-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.meme-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 16px 16px 20px;
+  border-radius: 24px;
+  text-align: center;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+  transform: scale(0.8) rotate(-3deg);
+  transition: transform 0.3s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+
+.meme-overlay.show .meme-card {
+  transform: scale(1) rotate(-1.5deg);
+}
+
+.meme-card img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 48vh;
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+}
+
+.meme-caption {
+  margin: 16px 0 4px;
+  font-size: clamp(24px, 7vw, 34px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #ffd166;
+  text-shadow:
+    0 0 18px rgba(255, 209, 102, 0.55),
+    0 4px 0 rgba(0, 0, 0, 0.4);
+  animation: scream 0.35s ease-in-out infinite alternate;
+}
+
+.meme-sub {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.meme-btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), #4b8bff);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.08s;
+}
+
+.meme-btn:hover {
+  filter: brightness(1.1);
+}
+
+.meme-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes scream {
+  from {
+    transform: rotate(-2deg) scale(1);
+  }
+  to {
+    transform: rotate(2deg) scale(1.05);
+  }
+}
+
+body.shaking {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  15% { transform: translate(-8px, 4px) rotate(-0.4deg); }
+  30% { transform: translate(7px, -5px) rotate(0.4deg); }
+  45% { transform: translate(-6px, 3px); }
+  60% { transform: translate(5px, -3px); }
+  80% { transform: translate(-3px, 2px); }
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-height: 720px) {
+  .display {
+    min-height: 96px;
+  }
+
+  .current {
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .key {
+    aspect-ratio: auto;
+    padding: 12px 0;
+  }
+
+  .hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
